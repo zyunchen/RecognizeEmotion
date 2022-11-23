@@ -25,8 +25,15 @@ samples = samplesfile['tyc_eeg3']  #extract numpy array from the dict
 sfreq = 256
 info = mne.create_info(ch_names,sfreq)
 raw = mne.io.RawArray(samples,info)
+
+#a band-pass filter between 1 and 75 Hz was applied to filter the unrelated artifacts
 raw_new = raw.copy().filter(1,75,'all')
-raw_new.plot()
+
+# downsampling to 200HZ
+raw_downsampled = raw_new.copy().resample(sfreq=200)
+
+
+raw_downsampled.plot()
 print('数据集的形状为', raw_new.get_data().shape)
 print('number of channels', raw_new.info.get('nchan'))
 
