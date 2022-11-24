@@ -26,11 +26,25 @@ sfreq = 256
 info = mne.create_info(ch_names,sfreq)
 raw = mne.io.RawArray(samples,info)
 
+print(1, type(raw))
+
 #a band-pass filter between 1 and 75 Hz was applied to filter the unrelated artifacts
 raw_new = raw.copy().filter(1,75,'all')
 
 # downsampling to 200HZ
 raw_downsampled = raw_new.copy().resample(sfreq=200)
+
+print(2, type(raw_downsampled))
+
+print('begin to print raw')
+print(raw_downsampled)
+
+print('begin to print raw info')
+print(raw_downsampled.info)
+
+
+# compute psd
+raw_downsampled.compute_psd(picks=['MEG_1','MEG_2']).plot(picks=['MEG_1'])
 
 
 raw_downsampled.plot()
