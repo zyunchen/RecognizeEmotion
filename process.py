@@ -6,6 +6,7 @@ import os # accessing directory structure
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
 from scipy.io import loadmat
+from scipy.stats import differential_entropy, norm
 import mne
 from sklearn.preprocessing import PolynomialFeatures 
 
@@ -44,7 +45,19 @@ print(raw_downsampled.info)
 
 
 # compute psd
-raw_downsampled.compute_psd(picks=['MEG_1','MEG_2']).plot(picks=['MEG_1'])
+psd = raw_downsampled.compute_psd(picks=['MEG_1','MEG_2']).plot(picks=['MEG_1'])
+
+
+#compute differential entropy
+de = differential_entropy(raw_downsampled.get_data())
+
+
+
+print(type(de))
+print(3,de)
+print(type(psd))
+print(dir(psd))
+print(4,psd)
 
 
 raw_downsampled.plot()
